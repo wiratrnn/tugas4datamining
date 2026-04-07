@@ -237,12 +237,11 @@ st.dataframe(rfm_clean.head(), use_container_width=True)
 
 c1, c2 = st.columns(2)
 with c1:
-    pass
-    # pairplot_data = rfm_clean[["recency", "frequency", "monetary"]].sample(
-    #     n=min(2000, len(rfm_clean)), random_state=42
-    # )
-    # fig_pair = sns.pairplot(pairplot_data, plot_kws={"alpha": 0.5})
-    # st.pyplot(fig_pair.fig, clear_figure=True)
+    pairplot_data = rfm_clean[["recency", "frequency", "monetary"]].sample(
+        n=min(2000, len(rfm_clean)), random_state=42
+    )
+    fig_pair = sns.pairplot(pairplot_data, plot_kws={"alpha": 0.5})
+    st.pyplot(fig_pair.fig, clear_figure=True)
 with c2:
     fig_3d = plot_3d_rfm(rfm_clean)
     st.pyplot(fig_3d, clear_figure=True)
@@ -303,9 +302,8 @@ X_test_scaled = scaler_cls.transform(X_test)
 st.write("Distribusi kelas pada data latih sebelum SMOTE:")
 st.dataframe(pd.Series(y_train).value_counts().rename("count"), use_container_width=True)
 
-# sm = SMOTE(random_state=int(random_state))
-# X_train_res, y_train_res = sm.fit_resample(X_train_scaled, y_train)
-X_train_res, y_train_res = X_train_scaled, y_train
+sm = SMOTE(random_state=int(random_state))
+X_train_res, y_train_res = sm.fit_resample(X_train_scaled, y_train)
 
 st.success("SMOTE berhasil diterapkan pada data latih.")
 
