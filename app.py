@@ -1,8 +1,7 @@
-
 import streamlit as st
 import pandas as pd
-# import matplotlib.pyplot as plt
-# import seaborn as sns
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
@@ -16,7 +15,7 @@ from sklearn.metrics import (
     silhouette_score,
     davies_bouldin_score,
 )
-# from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import SMOTE
 
 # -----------------------------
 # App configuration
@@ -134,55 +133,51 @@ def prepare_classification_data(df: pd.DataFrame, rfm_clean: pd.DataFrame):
 
 
 def plot_3d_rfm(rfm_clean: pd.DataFrame):
-    pass
-    # fig = plt.figure(figsize=(8, 6))
-    # ax = fig.add_subplot(111, projection="3d")
-    # ax.scatter(
-    #     rfm_clean["recency"],
-    #     rfm_clean["monetary"],
-    #     rfm_clean["frequency"],
-    #     s=10,
-    #     alpha=0.7,
-    # )
-    # ax.set_xlabel("Recency")
-    # ax.set_ylabel("Monetary")
-    # ax.set_zlabel("Frequency")
-    # ax.set_title("Sebaran RFM 3D")
-    # return fig
-
+    fig = plt.figure(figsize=(8, 6))
+    ax = fig.add_subplot(111, projection="3d")
+    ax.scatter(
+        rfm_clean["recency"],
+        rfm_clean["monetary"],
+        rfm_clean["frequency"],
+        s=10,
+        alpha=0.7,
+    )
+    ax.set_xlabel("Recency")
+    ax.set_ylabel("Monetary")
+    ax.set_zlabel("Frequency")
+    ax.set_title("Sebaran RFM 3D")
+    return fig
 
 def plot_elbow_silhouette_dbi(k_values, elbow, silhouette_km, dbi):
-    pass
-    # fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-    # axes[0].plot(k_values, elbow, marker="o")
-    # axes[0].set_title("Elbow Method")
-    # axes[0].set_xlabel("Jumlah Cluster (k)")
-    # axes[0].set_ylabel("Inertia")
+    axes[0].plot(k_values, elbow, marker="o")
+    axes[0].set_title("Elbow Method")
+    axes[0].set_xlabel("Jumlah Cluster (k)")
+    axes[0].set_ylabel("Inertia")
 
-    # axes[1].plot(k_values, silhouette_km, marker="o")
-    # axes[1].set_title("Silhouette Score")
-    # axes[1].set_xlabel("Jumlah Cluster (k)")
-    # axes[1].set_ylabel("Nilai Silhouette")
+    axes[1].plot(k_values, silhouette_km, marker="o")
+    axes[1].set_title("Silhouette Score")
+    axes[1].set_xlabel("Jumlah Cluster (k)")
+    axes[1].set_ylabel("Nilai Silhouette")
 
-    # axes[2].plot(k_values, dbi, marker="o")
-    # axes[2].set_title("Davies-Bouldin Index")
-    # axes[2].set_xlabel("Jumlah Cluster (k)")
-    # axes[2].set_ylabel("Nilai DBI")
+    axes[2].plot(k_values, dbi, marker="o")
+    axes[2].set_title("Davies-Bouldin Index")
+    axes[2].set_xlabel("Jumlah Cluster (k)")
+    axes[2].set_ylabel("Nilai DBI")
 
-    # plt.tight_layout()
-    # return fig
+    plt.tight_layout()
+    return fig
 
 
 def plot_confusion(y_true, y_pred, title):
-    pass
-    # cm = confusion_matrix(y_true, y_pred)
-    # fig, ax = plt.subplots(figsize=(5, 4))
-    # sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
-    # ax.set_title(title)
-    # ax.set_xlabel("Prediksi")
-    # ax.set_ylabel("Aktual")
-    # return fig
+    cm = confusion_matrix(y_true, y_pred)
+    fig, ax = plt.subplots(figsize=(5, 4))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
+    ax.set_title(title)
+    ax.set_xlabel("Prediksi")
+    ax.set_ylabel("Aktual")
+    return fig
 
 
 # -----------------------------
