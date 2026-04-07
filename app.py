@@ -265,11 +265,14 @@ kmeans, cluster_labels = fit_kmeans(rfm_scaled, n_clusters=n_clusters)
 rfm_clean = rfm_clean.copy()
 rfm_clean["cluster"] = cluster_labels
 
-cluster_profile = (
-    rfm_clean.groupby("cluster")
-    .agg({"recency": "mean", "frequency": "mean", "monetary": ["mean", "count"]})
-    .round(2)
-)
+rfm_summary = df.groupby('cluster').agg({
+    'recency': 'mean',
+    'frequency': 'mean',
+    'monetary': ['mean', 'count']
+})
+
+rfm_summary.columns = ['recency_mean', 'frequency_mean', 'monetary_mean', 'monetary_count']
+cluster_profile = rfm_summary.reset_index()
 
 st.write("Profil cluster:")
 st.dataframe(cluster_profile, use_container_width=True)
