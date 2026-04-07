@@ -265,7 +265,7 @@ kmeans, cluster_labels = fit_kmeans(rfm_scaled, n_clusters=n_clusters)
 rfm_clean = rfm_clean.copy()
 rfm_clean["cluster"] = cluster_labels
 
-rfm_summary = df.groupby('cluster').agg({
+rfm_summary = rfm_clean.groupby('cluster').agg({
     'recency': 'mean',
     'frequency': 'mean',
     'monetary': ['mean', 'count']
